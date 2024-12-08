@@ -1,0 +1,13 @@
+.container {
+    width: 100%;
+}
+
+.staticGame {
+    display: flex;
+    position: relative;
+}
+
+.contentContainer {
+    height: 100%;
+    width: 100%;
+}

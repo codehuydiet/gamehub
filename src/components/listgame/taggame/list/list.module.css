@@ -1,0 +1,58 @@
+.contentContainer {
+    width: calc(100vw -3.75rem);
+    position: relative;
+}
+
+.contentContainer:hover .buttonLeft,
+.contentContainer:hover .buttonRight {
+    background-color: #000000;
+    opacity: 0.6;
+}
+
+.contentContainer:hover .buttonLeft:hover,
+.contentContainer:hover .buttonRight:hover {
+    background-color: #000000;
+    opacity: 0.9;
+}
+
+.buttonLeft {
+    opacity: 0;
+    margin: 0.635rem 0;
+    font-size: 2.5rem;
+    font-weight: 800;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    height: 110px;
+    width: 4rem;
+}
+
+.buttonLeft:hover {
+    opacity: 0.9;
+}
+
+.buttonRight {
+    opacity: 0;
+    margin: 0.635rem 0;
+    font-size: 2.5rem;
+    font-weight: 800;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    height: 110px;
+    width: 4rem;
+}
+
+.buttonRight:hover {
+    opacity: 0.9;
+}
+
+.itemContainer {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    transition: 1s ease-in-out;
+}
