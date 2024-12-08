@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 const getData = async () => {
-    const data = await fetch(`http://localhost:3000/api/allgame`, { cache: 'no-store' })
+    const data = await fetch(`http://gamehub-beryl.vercel.app/api/allgame`, { cache: 'no-store' })
     if (!data.ok) {
         throw new Error("Something went wrong");
     }
