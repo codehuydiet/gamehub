@@ -32,6 +32,16 @@ export const register = async (prevState, formData) => {
         return { error2: "Passwords do not match!" };
     }
 
+    if (/\s/.test(userName)) {
+        return { error5: "username cannot contain spaces." };
+    }
+    if (/\s/.test(password)) {
+        return { error6: "password cannot contain spaces." };
+    }
+    if (/\s/.test(email)) {
+        return { error7: "Email cannot contain spaces." };
+    }
+
     try {
         connectToDb();
         const usermail = await users.findOne({ email: email });
@@ -86,6 +96,12 @@ export const login = async (prevState, formData) => {
     }
     if (!password || password == ' ') {
         return { error3: "Password cannot be empty." };
+    }
+    if (/\s/.test(EmailOrUserName)) {
+        return { error4: "Email or username cannot contain spaces." };
+    }
+    if (/\s/.test(password)) {
+        return { error5: "password cannot contain spaces." };
     }
     try {
         const result = await signIn("credentials", { redirect: true, EmailOrUserName, password });

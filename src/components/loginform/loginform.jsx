@@ -36,6 +36,11 @@ const LoginForm = () => {
                         {state?.error2}
                     </div>
                 ) : ""}
+                {state?.error4 ? (
+                    <div className='text-red-600'>
+                        {state?.error4}
+                    </div>
+                ) : ""}
                 <div className={'flex justify-center items-start flex-col w-[100%] mt-[0.5rem]'}>
                     <div className={`${style.inputWrap} ${focus === 'password' ? style.border : ''}`}>
                         <input className="outline-none text-[1rem] w-[350px] font-[700] text-[#f9faff] bg-transparent p-0" type="password"
@@ -46,6 +51,11 @@ const LoginForm = () => {
                         />
                     </div>
                 </div>
+                {state?.error5 ? (
+                    <div className='text-red-600'>
+                        {state?.error5}
+                    </div>
+                ) : ""}
                 {state?.error3 ? (
                     <div className='text-red-600'>
                         {state?.error3}
