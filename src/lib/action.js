@@ -20,27 +20,29 @@ export const isNavbarOn = async () => {
     // console.log(visible);
 }
 
-export const register = async (formData) => {
+export const register = async (prevState, formData) => {
     const { userName, password, passwordRepeat, email, nation } = Object.fromEntries(formData);
-    // console.log(userName, password, passwordRepeat, email, nation);
+    console.log(userName, password, passwordRepeat, email, nation);
+    if (!userName || !password || !passwordRepeat || !email || !nation) {
+        return { error1: "All fields are required!" };
+    }
 
     if (password !== passwordRepeat) {
-        // console.log("passwords do not match");
-        return;
+
+        return { error2: "Passwords do not match!" };
     }
 
     try {
         connectToDb();
-        const user = await users.findOne({ email: email });
-        if (user) {
-            if (user.userName === userName) {
-                // console.log("Username is already in use!");
-                return;
-            }
-            if (user.email === email) {
-                // console.log("This email is already registered!");
-                return;
-            }
+        const usermail = await users.findOne({ email: email });
+        const username = await users.findOne({ userName: userName });
+        if (username?.userName === userName) {
+            console.log(1);
+            return { error3: "Username is already in use!" };
+        }
+        if (usermail?.email === email) {
+            console.log(1);
+            return { error4: "This email is already registered!" };
         }
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
@@ -53,15 +55,13 @@ export const register = async (formData) => {
         console.log(newUser);
         await newUser.save();
         console.log(1);
-
         return { success: true };
     } catch (error) {
         console.error("Registration error:", error.message);
         throw new Error("Registration error!");
-    } finally {
-        redirect('/login')
     }
 };
+
 
 export const handleGooglLogin = async () => {
     await signIn("google");
@@ -91,12 +91,10 @@ export const login = async (prevState, formData) => {
         const result = await signIn("credentials", { redirect: true, EmailOrUserName, password });
         console.log(result);
     } catch (err) {
-        console.log(err);
-        console.log(err.message);
-
+        // console.log(err);
+        // console.log(err.message);
         if (err.message.includes("credentialssignin")) {
-            console.log(1);
-
+            // console.log(1);
             return { error: "Invalid username or password" };
         }
         throw err;
@@ -168,8 +166,7 @@ export const deleteAvatar = async (formData) => {
     const id = formData.get('action');
     try {
         connectToDb();
-        await gametag.deleteMany({ idGame: id });
-        await tags.findByIdAndDelete(id);
+        await avatar.findByIdAndDelete(id);
         console.log("deleted from db");
         revalidatePath("/admin");
     } catch (err) {
@@ -183,8 +180,7 @@ export const deleteCover = async (formData) => {
     const id = formData.get('action');
     try {
         connectToDb();
-        await gametag.deleteMany({ idGame: id });
-        await tags.findByIdAndDelete(id);
+        await cover.findByIdAndDelete(id);
         console.log("deleted from db");
         revalidatePath("/admin");
     } catch (err) {
@@ -193,20 +189,25 @@ export const deleteCover = async (formData) => {
     }
 }
 
-export const createUser = async (formData) => {
+export const createUser = async (prevState, formData) => {
+    "use server";
     const { userName, email, password, nation, isAdmin } = Object.fromEntries(formData);
     console.log(userName, email, password, nation, isAdmin);
+    if (!userName || !password || !isAdmin || !email || !nation) {
+        console.log(1);
+        return { error1: "All fields are required!" };
+    }
     try {
         connectToDb();
-        const userEmail = await users.findOne({ email: email });
+        const usermail = await users.findOne({ email: email });
         const username = await users.findOne({ userName: userName });
-        if (userEmail) {
-            console.log("email is already in use!");
-            return;
+        if (username?.userName === userName) {
+            console.log(1);
+            return { error3: "Username is already in use!" };
         }
-        if (username) {
-            console.log("userName is already in use!");
-            return;
+        if (usermail?.email === email) {
+            console.log(1);
+            return { error4: "This email is already registered!" };
         }
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);

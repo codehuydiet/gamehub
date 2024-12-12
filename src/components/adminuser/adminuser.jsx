@@ -1,6 +1,7 @@
 import { connectToDb } from '@/lib/utils'
 import style from './adminuser.module.css'
 import { createUser, deleteUser } from '@/lib/action';
+import Adminusercomponent from './adminusercomponent/Adminusercomponent'
 
 const getData = async () => {
     const data = await fetch(`${process.env.DOMAIN}/api/users`, { cache: 'no-store' })
@@ -9,10 +10,9 @@ const getData = async () => {
     }
     return data.json();
 }
-
+var result = {}
 const AdminUser = async () => {
     const data = await getData();
-    // console.log(data[0]._id);
     return (
         <div className={style.container}>
             <div className={style.data}>
@@ -25,17 +25,7 @@ const AdminUser = async () => {
                     </div>
                 ))}
             </div>
-            <div className={style.modify}>
-                <form className={style.form} action={createUser}>
-                    <input className={style.input} name='userName' type="text" placeholder='userName' />
-                    <input className={style.input} name='email' type="text" placeholder='email' />
-                    <input className={style.input} name='password' type="text" placeholder='password' />
-                    <input className={style.input} name='isAdmin' type="text" placeholder='isAdmin' />
-                    <input className={style.input} name='nation' type="text" placeholder='nation' />
-                    <button className={style.button}>Create</button>
-                </form>
-                <div className={style.stats}>Tổng có {data.length} dữ liệu</div>
-            </div>
+            <Adminusercomponent data={data}></Adminusercomponent>
         </div>
     )
 }
