@@ -78,14 +78,25 @@ export const handleLogout = async () => {
 
 export const login = async (prevState, formData) => {
     const { EmailOrUserName, password } = Object.fromEntries(formData);
-    // console.log(EmailOrUserName, password);
+    if (!EmailOrUserName && !password) {
+        return { error1: "Email or username and password cannot be empty." };
+    }
+    if (!EmailOrUserName || EmailOrUserName == ' ') {
+        return { error2: "Email or username cannot be empty." };
+    }
+    if (!password || password == ' ') {
+        return { error3: "Password cannot be empty." };
+    }
     try {
         const result = await signIn("credentials", { redirect: true, EmailOrUserName, password });
-        // console.log(result);
+        console.log(result);
     } catch (err) {
         console.log(err);
+        console.log(err.message);
 
-        if (err.message.includes("CredentialsSignin")) {
+        if (err.message.includes("credentialssignin")) {
+            console.log(1);
+
             return { error: "Invalid username or password" };
         }
         throw err;

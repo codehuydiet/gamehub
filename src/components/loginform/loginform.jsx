@@ -15,6 +15,9 @@ const LoginForm = () => {
     const handleBlur = () => {
         setFocus(null);
     }
+    console.log(state?.error);
+
+
     return (
         <div>
             <form className='w-[100%]' action={formAction}>
@@ -28,6 +31,11 @@ const LoginForm = () => {
                         />
                     </div>
                 </div>
+                {state?.error2 ? (
+                    <div className='text-red-600'>
+                        {state?.error2}
+                    </div>
+                ) : ""}
                 <div className={'flex justify-center items-start flex-col w-[100%] mt-[0.5rem]'}>
                     <div className={`${style.inputWrap} ${focus === 'password' ? style.border : ''}`}>
                         <input className="outline-none text-[1rem] w-[350px] font-[700] text-[#f9faff] bg-transparent p-0" type="password"
@@ -38,6 +46,21 @@ const LoginForm = () => {
                         />
                     </div>
                 </div>
+                {state?.error3 ? (
+                    <div className='text-red-600'>
+                        {state?.error3}
+                    </div>
+                ) : ""}
+                {state?.error1 ? (
+                    <div className='text-red-600'>
+                        {state?.error1}
+                    </div>
+                ) : ""}
+                {state?.error ? (
+                    <div className='text-red-600'>
+                        {state?.error}
+                    </div>
+                ) : ""}
                 <div className="relative w-[100%]">
                     <Link href='/fogot-password' className="h-[2.5rem] text-[#a48eff] text-[0.875rem] flex justify-center items-center mt-[0.25rem] mb-[0.5rem] float-right justify-end">Forgot Password?</Link>
                 </div>

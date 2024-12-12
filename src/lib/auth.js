@@ -21,6 +21,7 @@ const loginAu = async (credentials) => {
             if (!userbyemail) {
                 console.log("can not find user");
                 throw new Error("Wrong credentials!");
+                return { error: "Invalid username or password" };
             }
         }
         if (userbyname) {
@@ -78,6 +79,8 @@ export const {
                 try {
                     const user = await loginAu(credentials);
                     // console.log(user);
+                    console.log(user);
+
                     return user;
                 } catch (err) {
                     return null;
