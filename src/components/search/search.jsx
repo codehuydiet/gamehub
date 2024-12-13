@@ -15,12 +15,12 @@ const Search = () => {
         const query = e.target.value;
         setValue(query)
         if (query.length < 1) {
-            setResults([]); // Clear results if input is empty
+            setResults([]); 
             return;
         }
         try {
-            const games = await getGame(query); // Call getGame with the query
-            setResults(games); // Update state with the results
+            const games = await getGame(query); 
+            setResults(games);
         } catch (error) {
             console.error("Error fetching games:", error);
         }

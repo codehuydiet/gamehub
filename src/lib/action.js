@@ -296,7 +296,7 @@ export const createGame = async (prevState, formData) => {
         return { error1: "Game name cannot contain special characters." };
     }
 
-    const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
+    const urlRegex = /^https:\/\/.+/;
 
     if (!urlRegex.test(embed)) {
         return { error2: "Embed must be a valid URL." };
