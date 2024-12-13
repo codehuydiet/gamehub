@@ -45,6 +45,11 @@ const RegisterForm = () => {
                         {state?.error5}
                     </div>
                 ) : ""}
+                {state?.error8 ? (
+                    <div className='text-red-600'>
+                        {state?.error8}
+                    </div>
+                ) : ""}
                 <div className={'flex justify-center items-start flex-col w-[100%] mt-[0.5rem]'}>
                     <div className={`${style.inputWrap} ${focus === 'email' ? style.border : ''}`}>
                         <input className="outline-none text-[1rem] w-[100%] font-[700] text-[#f9faff] bg-transparent p-0" type="email"

@@ -26,6 +26,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-y: auto;
 }
 
 .stats {
@@ -84,5 +85,17 @@
 }
 
 .data::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.modify::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modify::-webkit-scrollbar-thumb {
+    background-color: #AAADBE;
+}
+
+.modify::-webkit-scrollbar-track {
     background-color: transparent;
 }

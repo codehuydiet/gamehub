@@ -1,5 +1,6 @@
 import { createGame, deleteGame } from '@/lib/action';
 import style from './admingame.module.css'
+import Admingameform from './form/admingameform';
 
 const getData = async () => {
     const data = await fetch(`${process.env.DOMAIN}/api/allgame`, { cache: 'no-store' })
@@ -11,7 +12,6 @@ const getData = async () => {
 
 const AdminGame = async () => {
     const data = await getData();
-    // console.log(data[0]._id);
     return (
         <div className={style.container}>
             <div className={style.data}>
@@ -24,18 +24,9 @@ const AdminGame = async () => {
                     </div>
                 ))}
             </div>
-            <div className={style.modify}>
-                <form className={style.form} action={createGame}>
-                    <input className={style.input} name='name' type="text" placeholder='name' />
-                    <input className={style.input} name='embed' type="text" placeholder='embed' />
-                    <input className={style.input} name='technology' type="text" placeholder='technology' />
-                    <input className={style.input} name='platforms' type="text" placeholder='platforms' />
-                    <input className={style.input} name='img' type="text" placeholder='img' />
-                    <input className={style.input} name='path' type="text" placeholder='path' />
-                    <button className={style.button}>Create</button>
-                </form>
-                <div className={style.stats}>Tổng có {data.length} dữ liệu</div>
-            </div>
+            <Admingameform data={data}>
+
+            </Admingameform>
         </div>
     )
 }

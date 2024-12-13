@@ -41,6 +41,9 @@ export const register = async (prevState, formData) => {
     if (/\s/.test(email)) {
         return { error7: "Email cannot contain spaces." };
     }
+    if (/[^a-zA-Z0-9]/.test(userName)) {
+        return { error8: "Username cannot contain special characters." };
+    }
 
     try {
         connectToDb();
@@ -102,6 +105,12 @@ export const login = async (prevState, formData) => {
     }
     if (/\s/.test(password)) {
         return { error5: "password cannot contain spaces." };
+    }
+    if (EmailOrUserName.length > 10) {
+        return { error6: "Email or username cannot exceed 10 characters." };
+    }
+    if (password.length > 15) {
+        return { error7: "password cannot exceed 15 characters." };
     }
     try {
         const result = await signIn("credentials", { redirect: true, EmailOrUserName, password });
@@ -279,32 +288,62 @@ export const createTag = async (formData) => {
     }
 }
 
-export const createGame = async (formData) => {
+export const createGame = async (prevState, formData) => {
     const { name, embed, technology, platforms, img, path } = Object.fromEntries(formData);
     console.log(name, embed, technology, platforms, img, path);
+
+    if (/[^a-zA-Z0-9]/.test(name)) {
+        return { error1: "Game name cannot contain special characters." };
+    }
+
+    const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
+
+    if (!urlRegex.test(embed)) {
+        return { error2: "Embed must be a valid URL." };
+    }
+
+    if (!urlRegex.test(img)) {
+        return { error3: "Image must be a valid URL." };
+    }
+
+    if (path.includes(" ")) {
+        return { error4: "Path cannot contain spaces." };
+    }
+    console.log(1);
     try {
+        console.log(1);
         connectToDb();
+        console.log(2);
+
         const path1 = "/game/" + path;
         const gameName = await games.findOne({ name: name });
         const gameEmbed = await games.findOne({ embed: embed });
         const gameImg = await games.findOne({ img: img });
         const gamePath = await games.findOne({ path: path1 });
+        console.log(1);
+
         if (gamePath) {
-            console.log("path is already in use!");
-            return;
+            console.log("Path is already in use!");
+            console.log(1);
+            return { error5: "Path is already in use." };
         }
         if (gameImg) {
-            console.log("img is already in use!");
-            return;
+            console.log(1);
+            console.log("Image is already in use!");
+            return { error6: "Image is already in use." };
         }
         if (gameName) {
-            console.log("game name is already in use!");
-            return;
+            console.log(1);
+            console.log("Game name is already in use!");
+            return { error7: "Game name is already in use." };
         }
         if (gameEmbed) {
-            console.log("embed name is already in use!");
-            return;
+            console.log(1);
+            console.log("Embed is already in use!");
+            return { error8: "Embed is already in use." };
         }
+        console.log(3);
+
         const newGame = games({
             name: name,
             embed: embed,
@@ -321,7 +360,9 @@ export const createGame = async (formData) => {
         console.log(err);
         return { error: "Something went wrong!" };
     }
-}
+};
+
+
 
 export const createAvatar = async (formData) => {
     const { img } = Object.fromEntries(formData);
