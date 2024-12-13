@@ -50,6 +50,11 @@ const RegisterForm = () => {
                         {state?.error8}
                     </div>
                 ) : ""}
+                {state?.error9 ? (
+                    <div className='text-red-600'>
+                        {state?.error9}
+                    </div>
+                ) : ""}
                 <div className={'flex justify-center items-start flex-col w-[100%] mt-[0.5rem]'}>
                     <div className={`${style.inputWrap} ${focus === 'email' ? style.border : ''}`}>
                         <input className="outline-none text-[1rem] w-[100%] font-[700] text-[#f9faff] bg-transparent p-0" type="email"
@@ -75,6 +80,11 @@ const RegisterForm = () => {
                         />
                     </div>
                 </div>
+                {state?.error10 ? (
+                    <div className='text-red-600'>
+                        {state?.error10}
+                    </div>
+                ) : ""}
                 <div className={'flex justify-center items-start flex-col w-[100%] mt-[0.5rem]'}>
                     <div className={`${style.inputWrap} ${focus === 'passwordRepeat' ? style.border : ''}`}>
                         <input className="outline-none text-[1rem] w-[350px] font-[700] text-[#f9faff] bg-transparent p-0" type="password"

@@ -44,6 +44,12 @@ export const register = async (prevState, formData) => {
     if (/[^a-zA-Z0-9]/.test(userName)) {
         return { error8: "Username cannot contain special characters." };
     }
+    if (userName.length > 10) {
+        return { error9: "Email or username cannot exceed 10 characters." };
+    }
+    if (password.length > 15) {
+        return { error10: "password cannot exceed 15 characters." };
+    }
 
     try {
         connectToDb();
